@@ -52,8 +52,8 @@ ENV NODE_ENV=production \
   PAPERCLIP_DEPLOYMENT_MODE=authenticated \
   PAPERCLIP_DEPLOYMENT_EXPOSURE=private
 
-
 EXPOSE 3100
 
-USER node
-CMD ["node", "--import", "./server/node_modules/tsx/dist/loader.mjs", "server/dist/index.js"]
+# Create required directories at startup (volume mount may override ownership)
+CMD mkdir -p /paperclip/instances/default/logs && \
+    node --import ./server/node_modules/tsx/dist/loader.mjs server/dist/index.js
